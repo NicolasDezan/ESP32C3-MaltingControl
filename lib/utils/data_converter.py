@@ -1,13 +1,19 @@
 import struct
 
-def to_string(data):
+# Encode
+def encode_to_utf_8(data):
+    return str(data).encode('utf-8')
+
+
+# Decode
+def decode_to_string(data):
     try:
         if data:
             return data.decode('utf-8')  # Decodifica como string UTF-8
     except Exception as e:
         return None
     
-def to_array_float(data):
+def decode_to_array_float(data):
     try:
         floats = struct.unpack('<' + 'f' * (len(data) // 4), data)
         return floats
@@ -15,7 +21,7 @@ def to_array_float(data):
         print("Erro ao decodificar em ArrayFloat")
         return None
     
-def to_array_short(data):
+def decode_to_array_short(data):
     try:
         # Modificar para 'h' no struct.unpack (cada short ocupa 2 bytes)
         shorts = struct.unpack('<' + 'h' * (len(data) // 2), data)
@@ -24,7 +30,7 @@ def to_array_short(data):
         print("Erro ao decodificar em ArrayShort:", e)
         return None
     
-def to_array_byte(data):
+def decode_to_array_byte(data):
     try:
         # Converte o ByteArray para uma lista de inteiros
         byte_list = list(data)

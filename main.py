@@ -1,7 +1,6 @@
 import asyncio
-import aioble
-import lib.utils.decode as decode
-import lib.utils.encode as encode
+import lib.aioble as aioble
+import lib.utils.data_converter as dt
 import lib.utils.bluetooth_config as bt
 
 # Tarefa para lidar com conexões
@@ -25,7 +24,7 @@ async def _peripheral_task():
 async def _write_task():
     while True:
         value = 1
-        bt.write_characteristic.write(encode.to_utf_8(value), send_update=True)
+        bt.write_characteristic.write(dt.encode_to_utf_8(value), send_update=True)
         print('WRITEN: ', value)
         await asyncio.sleep(1)            
 
@@ -36,13 +35,13 @@ async def _read_task():
             connection, data = await bt.read_characteristic.written()
             print('READ: ', data)
             
-            data_string = decode.to_string(data)
+            data_string = dt.decode_to_string(data)
             print('as STRING: ', data_string)
-            array_float = decode.to_array_float(data)
+            array_float = dt.decode_to_array_float(data)
             print('as ARRAYFLOAT: ', array_float)
-            array_short = decode.to_array_short(data)
+            array_short = dt.decode_to_array_short(data)
             print('as ARRAYSHORT: ', array_short)
-            array_byte = decode.to_array_byte(data)
+            array_byte = dt.decode_to_array_byte(data)
             print('as ARRAYBYTE: ', array_byte)
 
         except Exception as e:
