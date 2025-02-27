@@ -28,33 +28,43 @@ async def _write_task():
         print('WRITEN: ', value)
         await asyncio.sleep(1)            
 
+queue = asyncio.Queue() ; print("queue: ", queue)
+
 # Tarefa para monitorar dados recebidos
 async def _read_task():
     while True:
         try:
-            connection, data = await bt.read_characteristic.written()
-            print('READ: ', data)
-            
-            data_string = dt.decode_to_string(data)
-            print('as STRING: ', data_string)
-            array_float = dt.decode_to_array_float(data)
-            print('as ARRAYFLOAT: ', array_float)
-            array_short = dt.decode_to_array_short(data)
-            print('as ARRAYSHORT: ', array_short)
-            array_byte = dt.decode_to_array_byte(data)
-            print('as ARRAYBYTE: ', array_byte)
+            connection, data = await bt.read_characteristic.written() ; print('READ: ', data)
+            await queue.put(data) ; print("queue: ", queue)
 
         except Exception as e:
             print("Exception: ", e)
 
-        finally:
-            await asyncio.sleep_ms(100)
+        #finally:
+            #await asyncio.sleep_ms(100)
+
+async def _process_task():
+    while True:
+        data = queue.get() ; print ("data: ", data)
+
+        try:
+            array_byte = dt.decode_to_array_byte(data)
+            print('as ARRAYBYTE: ', array_byte)
+
+            if array_byte[0] == 0:
+                asyncio.create_task(_change_parameters_task(array_byte))
+        except Exception as e:
+            print("Exception_ArrayByte: ", e)
+
+async def _change_parameters_task(array_byte):
+    print("Mude os parametros!")
 
 async def main():
     write_task = asyncio.create_task(_write_task())
     peripheral_task = asyncio.create_task(_peripheral_task())
     read_task = asyncio.create_task(_read_task())
-    await asyncio.gather(write_task, peripheral_task, read_task)
+    process_task = asyncio.create_task(_process_task())
+    await asyncio.gather(write_task, peripheral_task, read_task, process_task)
 
 aioble.register_services(bt.bt_service)
 asyncio.run(main())
