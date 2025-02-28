@@ -1,0 +1,16 @@
+{
+    "was_in_process": false,
+    
+    "steeping_submerged_time": 101,
+    "steeping_water_volume": 102,
+    "steeping_rest_time": 103,
+    "steeping_cycles": 104,
+
+    "germination_rotation_level": 105,
+    "germination_total_time": 106,
+    "germination_water_volume": 107,
+    "germination_water_addition": 108,
+
+    "kilning_temperature": 109,
+    "kilning_time": 10
+}
