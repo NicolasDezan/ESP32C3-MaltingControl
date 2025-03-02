@@ -1,16 +1,16 @@
 {
     "was_in_process": false,
     
-    "steeping_submerged_time": 101,
-    "steeping_water_volume": 102,
-    "steeping_rest_time": 103,
-    "steeping_cycles": 104,
+    "steeping_submerged_time": 1,
+    "steeping_water_volume": 200,
+    "steeping_rest_time": 25.5,
+    "steeping_cycles": 1,
 
-    "germination_rotation_level": 105,
-    "germination_total_time": 106,
-    "germination_water_volume": 107,
-    "germination_water_addition": 108,
+    "germination_rotation_level": 0,
+    "germination_total_time": 24,
+    "germination_water_volume": 100,
+    "germination_water_addition": 10,
 
-    "kilning_temperature": 109,
-    "kilning_time": 10
+    "kilning_temperature": 40,
+    "kilning_time": 1.0
 }
