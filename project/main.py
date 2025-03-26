@@ -1,6 +1,6 @@
 import asyncio
 from tasks.main_tasks import peripheral_task, send_heartbeat_task, read_task
-import data.init_data as system_data
+from malting_task import malting_task
 
 async def main():
     # Cria três tarefas assíncronas que serão executadas simultâneamente:
@@ -14,8 +14,11 @@ async def main():
     # 3. Tarefa para recebimento e tratamento dos dados recebidos via Bluetooth
     read_data = asyncio.create_task(read_task())
     
+    # 4. Tarefa para gerenciamento do processo de malteação
+    malting = asyncio.create_task(malting_task())
+
     # Cria o loop principal juntando as tarefas
-    await asyncio.gather(send_heartbeat, peripheral, read_data)
+    await asyncio.gather(send_heartbeat, peripheral, read_data, malting)
 
 # Inicia o loop principal
 asyncio.run(main())
