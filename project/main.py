@@ -1,10 +1,6 @@
 import asyncio
-import aioble
-import lib.utils.bluetooth_config as bt
 from tasks.main_tasks import peripheral_task, send_heartbeat_task, read_task
 import data.init_data as system_data
-
-aioble.register_services(bt.bt_service)
 
 async def main():
     send_heartbeat = asyncio.create_task(send_heartbeat_task())
