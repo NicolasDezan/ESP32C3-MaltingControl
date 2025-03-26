@@ -1,7 +1,7 @@
 import aioble
 import asyncio
 import lib.utils.bluetooth_config as bt
-from lib.utils.task_handler import task_handler
+from tasks.task_handler import task_handler
 from lib.utils.memory_usage import print_memory_usage
 from data.consts_groups import WriteList
 
