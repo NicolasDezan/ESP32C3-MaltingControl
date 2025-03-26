@@ -13,3 +13,5 @@ write_characteristic = aioble.Characteristic(bt_service, BT_WRITE_UUID, read=Tru
 
 BT_READ_UUID = bluetooth.UUID('12345678-1234-1234-1234-1234567890ad')
 read_characteristic = aioble.Characteristic(bt_service, BT_READ_UUID, read=True, write=True, notify=True, capture=True)
+
+aioble.register_services(bt_service)
