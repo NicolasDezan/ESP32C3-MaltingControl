@@ -53,6 +53,30 @@ async def change_parameters_task(array_byte):
 
     parameter.rewrite_data()
 
+    from tasks.main_tasks import write_task
+    
+    asyncio.run(
+        write_task([
+            WriteList.SEND_PARAMETERS,
+
+            # Steeping
+            int((parameter.steeping_submerged_time - ParametersCorrections.Steeping.SubmergedTime.MIN_VALUE) / ParametersCorrections.Steeping.SubmergedTime.MULT_TEN),
+            int((parameter.steeping_water_volume - ParametersCorrections.Steeping.WaterVolume.MIN_VALUE) / ParametersCorrections.Steeping.WaterVolume.MULT_TEN),
+            int((parameter.steeping_rest_time - ParametersCorrections.Steeping.RestTime.MIN_VALUE) / ParametersCorrections.Steeping.RestTime.MULT_TEN),
+            int((parameter.steeping_cycles - ParametersCorrections.Steeping.Cycles.MIN_VALUE) / ParametersCorrections.Steeping.Cycles.MULT_TEN),
+
+            # Germination
+            int((parameter.germination_rotation_level - ParametersCorrections.Germination.RotationLevel.MIN_VALUE) / ParametersCorrections.Germination.RotationLevel.MULT_TEN),
+            int((parameter.germination_total_time - ParametersCorrections.Germination.TotalTime.MIN_VALUE) / ParametersCorrections.Germination.TotalTime.MULT_TEN),
+            int((parameter.germination_water_volume - ParametersCorrections.Germination.WaterVolume.MIN_VALUE) / ParametersCorrections.Germination.WaterVolume.MULT_TEN),
+            int((parameter.germination_water_addition - ParametersCorrections.Germination.WaterAddition.MIN_VALUE) / ParametersCorrections.Germination.WaterAddition.MULT_TEN),
+
+            # Kilning
+            int((parameter.kilning_temperature - ParametersCorrections.Kilning.Temperature.MIN_VALUE) / ParametersCorrections.Kilning.Temperature.MULT_TEN),
+            int((parameter.kilning_time - ParametersCorrections.Kilning.Time.MIN_VALUE) / ParametersCorrections.Kilning.Time.MULT_TEN)
+        ])
+    )
+
     parameter.print_current_data()
 
 
