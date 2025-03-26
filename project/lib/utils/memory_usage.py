@@ -1,6 +1,6 @@
 import gc
 
-def print_memory_usage():
+def memory_usage():
     # Habilita o garbage collector (caso não esteja habilitado)
     gc.enable()
     
@@ -21,4 +21,6 @@ def print_memory_usage():
     # print(f"Total de RAM: {total_ram} bytes")
     # print(f"RAM usada: {mem_alloc} bytes")
     # print(f"RAM livre: {mem_free} bytes")
-    print(f"Usage RAM: {usage_percentage:.2f}%")
+    # print(f"Usage RAM: {usage_percentage:.2f}%")
+
+    return usage_percentage
