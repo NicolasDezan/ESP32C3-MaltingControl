@@ -1,5 +1,5 @@
 import asyncio
-from tasks.main_tasks import peripheral_task, send_heartbeat_task, read_task
+from tasks.bluetooth_tasks import peripheral_task, send_heartbeat_task, read_task
 from malting_task import malting_task
 
 async def main():

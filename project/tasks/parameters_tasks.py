@@ -53,7 +53,7 @@ async def change_parameters_task(array_byte):
 
     parameter.rewrite_data()
 
-    from tasks.main_tasks import write_task
+    from tasks.bluetooth_tasks import write_task
     
     asyncio.run(
         write_task([
@@ -81,7 +81,7 @@ async def change_parameters_task(array_byte):
 
 
 async def send_parameters_task(array_byte):
-    from tasks.main_tasks import write_task
+    from tasks.bluetooth_tasks import write_task
     print("send_parameters_task() was CALLED: ", array_byte)
 
     asyncio.run(
