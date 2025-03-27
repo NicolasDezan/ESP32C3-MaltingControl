@@ -3,3 +3,7 @@ ble_secrets.json
 
 # VS Code
 .vscode
+__pycache__
+
+# Testes
+tester.py
