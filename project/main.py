@@ -1,6 +1,7 @@
 import asyncio
 from tasks.bluetooth_tasks import peripheral_task, send_heartbeat_task, read_task
 from tasks.malting_task import malting_task
+import data.init_data
 
 async def main():
     # Cria três tarefas assíncronas que serão executadas simultâneamente:
