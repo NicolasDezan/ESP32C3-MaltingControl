@@ -1,5 +1,5 @@
 default_data = {
-    "was_in_process": False,
+    # "was_in_process": False,
     
     "steeping_submerged_time": 1,  # horas
     "steeping_water_volume": 200, # mL

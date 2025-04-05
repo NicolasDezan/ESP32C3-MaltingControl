@@ -26,8 +26,8 @@ if(_loaded_data == {}):
     _write_data(_dir,_file_name,_default)
     _loaded_data = _read_data(_dir,_file_name)
 
-# System Data
-was_in_process = _loaded_data.get("was_in_process")
+# System Data -> Comentado: aplicação futura para lidar com interrupções do processo
+# was_in_process = _loaded_data.get("was_in_process")
 
 # Steeping
 steeping_submerged_time = _loaded_data.get("steeping_submerged_time")
@@ -47,7 +47,7 @@ kilning_time = _loaded_data.get("kilning_time")
 
 def rewrite_data():
     _current_data = {
-    "was_in_process": was_in_process,
+    # "was_in_process": was_in_process,
     
     "steeping_submerged_time": steeping_submerged_time,
     "steeping_water_volume": steeping_water_volume,
@@ -68,8 +68,8 @@ def print_current_data():
     print("----------------------------------------")
     print("             Current Data               ")
     print("----------------------------------------")
-    print()    
-    print(f"SystemData  - was_in_process: {was_in_process}")
+    # print()    
+    # print(f"SystemData  - was_in_process: {was_in_process}")
     print()
     print(f"Steeping    - submerged_time: {steeping_submerged_time}")
     print(f"Steeping    - water_volume: {steeping_water_volume}")
