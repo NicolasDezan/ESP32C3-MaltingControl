@@ -3,6 +3,7 @@ class ReadList:
     SEND_PARAMETERS = 1
 
 class WriteList:
+    SENSOR_VALUES = 2
     SEND_PARAMETERS = 1
     HEARTBEAT = 255
 
