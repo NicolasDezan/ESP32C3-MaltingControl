@@ -1,11 +1,16 @@
 from machine import Pin
 
 class Actuator:
-    def __init__(self, name: str, pin_number: int, active_high: bool = True):
+    def __init__(self, name: str, pin_number: int, active_high: bool = False):
+        """
+        name: Nome do atuador
+        pin_number: Número do pino GPIO
+        active_high: Se True, ativa com nível alto (1). Se False, ativa com nível baixo (0). Default: False (lógica invertida)
+        """
         self.name = name
         self.pin = Pin(pin_number, Pin.OUT)
         self.active_high = active_high
-        self.state = False
+        self.state = False  # Inicia desligado
         self.off()
 
     def on(self):
