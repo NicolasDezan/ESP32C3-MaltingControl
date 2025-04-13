@@ -4,6 +4,7 @@ import lib.utils.bluetooth_config as bt
 from tasks.task_handler import task_handler
 from lib.utils.memory_usage import memory_usage
 from data.consts_groups import WriteList
+from data.actuators import send_actuators_state
 
 # Tarefa para lidar com conexões
 async def peripheral_task():
@@ -47,6 +48,7 @@ async def send_heartbeat_task():
         ]
         
         bt.write_characteristic.write(bytes(message), send_update=True)
+        send_actuators_state()
         await asyncio.sleep(2)
 
 
