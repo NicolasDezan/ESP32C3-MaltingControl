@@ -48,8 +48,9 @@ async def send_heartbeat_task():
         ]
         
         bt.write_characteristic.write(bytes(message), send_update=True)
+        await asyncio.sleep(1)
         send_actuators_state()
-        await asyncio.sleep(2)
+        await asyncio.sleep(1)
 
 
 async def write_task(data_to_send):
