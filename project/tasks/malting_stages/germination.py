@@ -35,11 +35,11 @@ async def germination_stage():
 async def time_control():
     import data.init_data as setpoint
 
-    init_time = uptime.minutes()
-    while (uptime.minutes() < (setpoint.germination_total_time*60 + init_time)):
+    init_time = uptime.seconds()
+    while (uptime.seconds() < (setpoint.germination_total_time*1.5 + init_time)):
         if malting_control["abort_flag"].is_set():
             print("! ABORTED GERMINATION !") 
-        print(f"[DEBUG] Germination: {uptime.minutes() - init_time}/{setpoint.germination_total_time*60}")
+        print(f"[DEBUG] Germination: {uptime.seconds() - init_time}/{setpoint.germination_total_time*1.5}")
 
         await asyncio.sleep(5)
 

@@ -44,12 +44,12 @@ async def time_control():
         
         # 2. Esperar tempo submerso
         print(f"Submerged for {setpoint.steeping_submerged_time}h")
-        init_time = uptime.minutes()
-        while (uptime.minutes() < (setpoint.steeping_submerged_time*60 + init_time)):
+        init_time = uptime.seconds()
+        while (uptime.seconds() < (setpoint.steeping_submerged_time*5 + init_time)):
             if malting_control["abort_flag"].is_set():
                 print("! ABORTED DURING SUBMERGED TIME !")
                 return
-            print(f"[DEBUG] Submerged: {(uptime.minutes() - init_time)}/{setpoint.steeping_submerged_time*60}")
+            print(f"[DEBUG] Submerged: {(uptime.seconds() - init_time)}/{setpoint.steeping_submerged_time*5}")
 
             await asyncio.sleep(1)
 
@@ -61,13 +61,13 @@ async def time_control():
         
         # 4. Esperar tempo de descanso
         print(f"Resting for {setpoint.steeping_rest_time}h")
-        init_time = uptime.minutes()
-        while (uptime.minutes() < (setpoint.steeping_rest_time*60 + init_time)):
+        init_time = uptime.seconds()
+        while (uptime.seconds() < (setpoint.steeping_rest_time*5 + init_time)):
             
             if malting_control["abort_flag"].is_set():
                 print("! ABORTED DURING REST TIME !")
                 return
-            print(f"[DEBUG] Resting: {(uptime.minutes() - init_time)}/{setpoint.steeping_rest_time*60}")
+            print(f"[DEBUG] Resting: {(uptime.seconds() - init_time)}/{setpoint.steeping_rest_time*5}")
 
             await asyncio.sleep(1)
 

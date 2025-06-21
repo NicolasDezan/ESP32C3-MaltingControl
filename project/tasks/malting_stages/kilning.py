@@ -31,14 +31,16 @@ async def kilning_stage():
 async def kilning_time_control():
     import data.init_data as setpoint
 
-    init_time = uptime.minutes()
-    while (uptime.minutes() < (setpoint.kilning_time*60 + init_time)):
+    init_time = uptime.seconds()
+    while (uptime.seconds() < (setpoint.kilning_time*15 + init_time)):
         if malting_control["abort_flag"].is_set():
             print("! ABORTED KILNING !") 
             return
         
-        print(f"[DEBUG] Kilning: {uptime.minutes() - init_time}/{setpoint.kilning_time*60}")
+        print(f"[DEBUG] Kilning: {uptime.seconds() - init_time}/{setpoint.kilning_time*15}")
         await asyncio.sleep(5)
+
+    malting_control["current_stage"] = None    
 
 
 # Aqui deve ser usado o setpoint.kilning_temperature
@@ -52,7 +54,7 @@ async def kilning_temperature_control():
         resistencia.on()
         print("[DEBUG] High temperature control loop is active")
         
-        await asyncio.sleep(2.5)
+        await asyncio.sleep(10.0)
 
     malting_control["current_stage"] = None
 
