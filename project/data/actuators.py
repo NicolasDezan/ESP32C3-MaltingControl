@@ -27,4 +27,4 @@ def send_actuators_state():
     ]
 
     bt.write_characteristic.write(bytes(message), send_update=True)
-    print("Mensagem de atuadores enviada:", message)
+    # print("Mensagem de atuadores enviada:", message)

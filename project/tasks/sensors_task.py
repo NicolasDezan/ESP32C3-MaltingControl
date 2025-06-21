@@ -44,7 +44,7 @@ async def sensors_task():
             eco2_b1, eco2_b2, eco2_b3
         ]
 
-        print("Sensors Message = ", message)
+        # print("Sensors Message = ", message)
 
         bt.write_characteristic.write(bytes(message), send_update=True)
 
