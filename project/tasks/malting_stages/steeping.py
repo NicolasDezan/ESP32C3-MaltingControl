@@ -1,6 +1,7 @@
 from tasks.malting_task import malting_control
 from lib.utils.uptime import Uptime; uptime = Uptime()
 import asyncio
+from data.actuators import valvula_entrada, valvula_saida, bomba_ar, rotacao
 
 async def steeping_stage():
     malting_control["current_stage"] = "steeping"
@@ -21,6 +22,8 @@ async def steeping_stage():
         print("! STEEPING ABORTED !")
 
     finally:
+        valvula_saida.on()
+        valvula_entrada.off()
         print("...")
 
 
@@ -31,7 +34,7 @@ async def time_control():
     
     while cycle < setpoint.steeping_cycles:
         cycle += 1
-        print(f"\n[Cycle {cycle}/{setpoint.steeping_cycles}]")
+        print(f"\n[[DEBUG] Cycle {cycle}/{setpoint.steeping_cycles}]")
         
         # 1. Encher água
         await fill_water()
@@ -46,7 +49,7 @@ async def time_control():
             if malting_control["abort_flag"].is_set():
                 print("! ABORTED DURING SUBMERGED TIME !")
                 return
-            print(f"Submerged: {(uptime.minutes() - init_time)}/{setpoint.steeping_submerged_time*60}")
+            print(f"[DEBUG] Submerged: {(uptime.minutes() - init_time)}/{setpoint.steeping_submerged_time*60}")
 
             await asyncio.sleep(1)
 
@@ -64,16 +67,15 @@ async def time_control():
             if malting_control["abort_flag"].is_set():
                 print("! ABORTED DURING REST TIME !")
                 return
-            print(f"Resting: {(uptime.minutes() - init_time)}/{setpoint.steeping_rest_time*60}")
+            print(f"[DEBUG] Resting: {(uptime.minutes() - init_time)}/{setpoint.steeping_rest_time*60}")
 
             await asyncio.sleep(1)
 
     malting_control["current_stage"] = None
 
-# IMPLEMENTAR A LOGICA DE CONVERTER VOLUME EM TEMPO DE VALVULA ABERTO
-async def fill_water(): # Esse trecho usa o volume de água
+async def fill_water():
     init_time = uptime.seconds()
-    print("OPEN FILL_VALVE") # NESSA LINHA DEVE MANDAR ABRIR A VALVULA
+    print("[DEBUG] OPEN FILL_VALVE") ;  valvula_entrada.on()
 
     while (uptime.seconds() < (3 + init_time)):
         if malting_control["abort_flag"].is_set():
@@ -84,24 +86,22 @@ async def fill_water(): # Esse trecho usa o volume de água
         print("Filling...")
         await asyncio.sleep(1)
 
-    print("CLOSE FILL_VALVE") # NESSA LINHA DEVE MANDAR FECHAR A VALVULA
+    print("[DEBUG] CLOSE FILL_VALVE") ;  valvula_entrada.off()
 
-# IMPLEMENTAR A LOGICA DE CONVERTER VOLUME EM TEMPO DE VALVULA ABERTO
 async def drain_water():
     init_time = uptime.seconds()
-    print("OPEN DRAIN_VALVE") # NESSA LINHA DEVE MANDAR ABRIR A VALVULA DE DRENAGEM
+    print("[DEBUG] OPEN DRAIN_VALVE") ;  valvula_saida.on()
 
     while (uptime.seconds() < (3 + init_time)):
         if malting_control["abort_flag"].is_set():
             print("! ABORTED DRAINING !")
-            print("CLOSE DRAIN_VALVE") # !!! NECESSÁRIO CRIAR UM PROTOCOLO MELHORADO DE ABORTAR
+            print("[DEBUG] CLOSE DRAIN_VALVE") ;  valvula_saida.off()
             return
         
-        # SIMULAÇÃO DO TEMPO DE ESVAZIAR
-        print("Draining...")
+        print("[DEBUG] Draining...")
         await asyncio.sleep(1)
 
-    print("CLOSE DRAIN_VALVE")# NESSA LINHA DEVE MANDAR FECHAR A VALVULA DE DRENAGEM
+    print("[DEBUG] CLOSE DRAIN_VALVE") ;  valvula_saida.off()
 
 
 async def temperature_control():
@@ -109,5 +109,5 @@ async def temperature_control():
         if malting_control["abort_flag"].is_set():
             print("! ABORTED STEEPING TEMPERATURE CONTROL !")
             return
-        print("Controlling temperature...")
-        await asyncio.sleep(2.5)
+        print("[DEBUG] Temperature control loop is running")
+        await asyncio.sleep(10.0)

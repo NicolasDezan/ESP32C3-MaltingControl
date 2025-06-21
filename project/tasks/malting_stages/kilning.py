@@ -1,6 +1,7 @@
 from tasks.malting_task import malting_control
 from lib.utils.uptime import Uptime; uptime = Uptime()
 import asyncio
+from data.actuators import valvula_entrada, valvula_saida, rotacao, resistencia
 
 async def kilning_stage():
     """Etapa de secagem dos grãos"""
@@ -22,6 +23,8 @@ async def kilning_stage():
         print("! KILNING ABORTED !")
 
     finally:
+        rotacao.off()
+        resistencia.off()
         pass
 
 
@@ -34,7 +37,7 @@ async def kilning_time_control():
             print("! ABORTED KILNING !") 
             return
         
-        print(f"Kilning: {uptime.minutes() - init_time}/{setpoint.kilning_time*60}")
+        print(f"[DEBUG] Kilning: {uptime.minutes() - init_time}/{setpoint.kilning_time*60}")
         await asyncio.sleep(5)
 
 
@@ -46,7 +49,8 @@ async def kilning_temperature_control():
             print("! ABORTED KILNING TEMPERATURE CONTROL !")
             return
         
-        print("Controlling high temperature...")
+        resistencia.on()
+        print("[DEBUG] High temperature control loop is active")
         
         await asyncio.sleep(2.5)
 
@@ -61,6 +65,8 @@ async def kilning_rotation_control():
             print("! ABORTED KILNING ROTATION CONTROL !")
             return
         
-        print("Rotating...")
+        rotacao.on()
+
+        print("[DEBUG] Rotation loop is active")
         
         await asyncio.sleep(5)
