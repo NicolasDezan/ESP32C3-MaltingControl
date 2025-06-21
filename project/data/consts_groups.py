@@ -1,6 +1,8 @@
 class ReadList:
     CHANGE_PARAMETERS = 0
     SEND_PARAMETERS = 1
+    START_PROCESS = 178
+    ABORT_PROCESS = 188
 
 class WriteList:
     SEND_PARAMETERS = 1

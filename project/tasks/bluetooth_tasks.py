@@ -5,6 +5,7 @@ from tasks.task_handler import task_handler
 from lib.utils.memory_usage import memory_usage
 from data.consts_groups import WriteList
 from data.actuators import send_actuators_state
+from tasks.malting_task import malting_control
 
 # Tarefa para lidar com conexões
 async def peripheral_task():
@@ -35,16 +36,27 @@ async def read_task():
             print("ERROR in read_task(): ", e)
 
 
-# Tarefa para envio de cores a cada 2 segundos
 async def send_heartbeat_task():
     while True:
         _memory_usage_A = int(memory_usage())
         _memory_usage_B = int((memory_usage()*100) % 100)
         
+        processStatus = 0
+
+        if(malting_control["current_stage"] == None):
+            processStatus = 1
+        if(malting_control["current_stage"] == "steeping"):
+            processStatus = 2
+        if(malting_control["current_stage"] == "germination"):
+            processStatus = 3        
+        if(malting_control["current_stage"] == "kilning"):
+            processStatus = 4        
+
         message = [
             WriteList.HEARTBEAT,
             _memory_usage_A,
-            _memory_usage_B
+            _memory_usage_B,
+            int(processStatus)
         ]
         
         bt.write_characteristic.write(bytes(message), send_update=True)
