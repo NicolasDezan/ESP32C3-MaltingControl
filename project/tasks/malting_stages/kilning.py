@@ -40,6 +40,8 @@ async def kilning_time_control():
         print(f"[DEBUG] Kilning: {uptime.minutes() - init_time}/{setpoint.kilning_time*60}")
         await asyncio.sleep(5)
 
+    malting_control["current_stage"] = None
+
 
 # Aqui deve ser usado o setpoint.kilning_temperature
 async def kilning_temperature_control():
@@ -52,9 +54,7 @@ async def kilning_temperature_control():
         resistencia.on()
         print("[DEBUG] High temperature control loop is active")
         
-        await asyncio.sleep(2.5)
-
-    malting_control["current_stage"] = None
+        await asyncio.sleep(10.0)
 
 
 # Rotação: básica
